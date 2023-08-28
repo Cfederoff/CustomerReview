@@ -1,0 +1,1 @@
+"bad", "mean", "rude", "bossy","careless", "cynical", "dishonest", "grumpy", "harsh", "impatient", "impolite", "awful", "creepy"
