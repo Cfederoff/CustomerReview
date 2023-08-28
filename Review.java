@@ -10,7 +10,7 @@ import java.io.*;
 
 /**
  * Program analyzes a line from a review and looks for adjectives that are in good and bad reviews. After counting how
- * many good and bad adjectives are in a review, it attributes a a star rating to the review. This program was also
+ * many good and bad adjectives are in a review, it attributes a star rating to the review. This program was also
  * used to take a review and switch the adjectives in it. This program comes from Project Lead the Way CSA for the
  * Consumer Review Project.
  **/
