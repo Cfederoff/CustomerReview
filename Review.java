@@ -43,7 +43,6 @@ public class Review { //
       Scanner input = new Scanner(new File("positiveAdjectives.txt"));
       while(input.hasNextLine()){
         String temp = input.nextLine().trim();
-        System.out.println(temp);
         posAdjectives.add(temp);
       }
       input.close();
@@ -108,7 +107,7 @@ public class Review { //
    * Returns the ending punctuation of a string, or the empty string if there is none 
    */
   public static String getPunctuation( String word )
-  { 
+  {
     String punc = "";
     for(int i=word.length()-1; i >= 0; i--){
       if(!Character.isLetterOrDigit(word.charAt(i))){
@@ -253,7 +252,7 @@ public static String fakeReview(String fileName, String GB)
   }
   return fakeReview.replace("*", "");
 }
-public static String Count(String fileName){
+public static String overallSentiment(String fileName){
   String review = textToString(fileName);
   int start = 0;
   Integer negativecount = 0;
@@ -293,7 +292,8 @@ public static String Count(String fileName){
   // Prints a statement about the review overall with items in the list above.
   return ("This review has " + count[0] + " postive adjectives, with " + count[1] + " negative adjectives, has a total sentiment of " + count[2] + " is rated " + count[3] + " stars.");
 }
-  public static void main(String[] args {
+  public static void main(String[] args) {
     System.out.println(fakeReview("SimpleReview.txt","GoodFake"));
+    System.out.println(overallSentiment("SimpleReview.txt"));
   }
 }
