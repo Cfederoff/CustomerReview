@@ -68,7 +68,7 @@ public class Review { //
    * Returns a string containing all of the text in fileName (including punctuation),
    * with words separated by a single space 
    */
-  public static String textToString( String fileName )
+  public static String textToString(String fileName)
   {  
     String temp = "";
     try {
@@ -167,16 +167,15 @@ public class Review { //
       return randomNegativeAdj();
     }
   }
-  public static double totalSentiment( String filename )
-  {
+  public static double totalSentiment(String review) {
     try{
-      String review = removePunctuation(textToString(filename));
+      String reviewCheck = removePunctuation(review);
       double sentimentValue = 0.0;
       int start =0;
-      for (int i = 1; i <= review.length(); i++)
+      for (int i = 1; i < review.length(); i++)
     {
-      String spacingSequence = review.substring(i-1,i);
-      String word = review.substring(start, i-1);
+      String spacingSequence = reviewCheck.substring(i-1,i);
+      String word = reviewCheck.substring(start, i-1);
       if (spacingSequence.equals(" "))
       {
         double wordValue = Review.sentimentVal(word);
@@ -188,37 +187,37 @@ public class Review { //
     }
     catch(Exception e)
     {
+      e.printStackTrace();
       return 0;
     }
 
   }
-  public static Integer starRating(String fileName)
+  public static Integer starRating(String review)
   {
 
-    Double totalSentiment = totalSentiment(fileName);
+    Double totalSentiment = totalSentiment(review);
     if(totalSentiment > 5)
     {
       return 4;
     }
     else if(totalSentiment > 0 && totalSentiment < 5)
     {
-    return 3;
+      return 3;
     }
     else if(totalSentiment > -5 && totalSentiment < 0)
     {
-    return 2;
+      return 2;
     }
     else if(totalSentiment > -10 && totalSentiment < -5)
     {
-    return 1;
+      return 1;
     }
     else
     {
-    return 0;
+      return 0;
     }
-}
-public static String fakeReview(String fileName, String GB)
-{
+  }
+public static String fakeReview(String fileName, String GB) {
   String review = removePunctuation(textToString(fileName));
   int start = 0;
   String fakeReview = review;
@@ -252,15 +251,14 @@ public static String fakeReview(String fileName, String GB)
   }
   return fakeReview.replace("*", "");
 }
-public static String overallSentiment(String fileName){
-  String review = textToString(fileName);
+public static String overallSentiment(String review){
   int start = 0;
   Integer negativecount = 0;
   Integer positivecount = 0;
   //Runs the totalSentiment method to get a Double
-  Double totalSentiment = totalSentiment(fileName);
+  Double totalSentiment = totalSentiment(review);
   //Runs the starRating method to get a Integar
-  Integer starRating = starRating(fileName);
+  Integer starRating = starRating(review);
   for (int i = 1; i <= review.length(); i++)
   {
     String spacingSequence = review.substring(i-1,i);
@@ -292,8 +290,28 @@ public static String overallSentiment(String fileName){
   // Prints a statement about the review overall with items in the list above.
   return ("This review has " + count[0] + " postive adjectives, with " + count[1] + " negative adjectives, has a total sentiment of " + count[2] + " is rated " + count[3] + " stars.");
 }
+
+
+  public static void reviewFile (String file) {
+    ArrayList<String> reviewFile = new ArrayList<>();
+    try (BufferedReader bfr = new BufferedReader(new FileReader(file))) {
+      String line = bfr.readLine(); //String of each line in the file
+      while (line != null) {
+        reviewFile.add(line);
+        line = bfr.readLine();
+      }
+      for (String s : reviewFile) {
+        System.out.println(overallSentiment(s));
+      }
+    } catch (Exception e) {
+      System.out.println("File was not found");
+    }
+}
   public static void main(String[] args) {
-    System.out.println(fakeReview("SimpleReview.txt","GoodFake"));
-    System.out.println(overallSentiment("SimpleReview.txt"));
+    Scanner sc = new Scanner(System.in);
+    System.out.println("Enter review .txt file");
+    String file = sc.nextLine();
+    reviewFile(file);
+
   }
 }
